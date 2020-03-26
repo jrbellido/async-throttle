@@ -1,54 +1,25 @@
 let asyncThrottle = require('./async-throttle.js');
 
-var jobs = [];
+function createJobs(count, time) {
+    var jobs = [];
+    for (let i = 0; i < count; i++) {
+        jobs.push(function(resolve, reject) {
+            setTimeout(function() {
+                var data = `job${i}: done!`;
+                console.log(data);
+                resolve(data);
+            }, time);
+        });
+    }
+    return jobs;
+}
 
-jobs.push(function(resolve, reject) {
-    setTimeout(function() {
-        var data = "job1 - done!";
-        console.log(data);
-        resolve(data);
-    }, 500);
-});
-jobs.push(function(resolve, reject) {
-    setTimeout(function() {
-        var data = "job2 - done!";
-        console.log(data);
-        resolve(data);
-    }, 500);
-});
-jobs.push(function(resolve, reject) {
-    setTimeout(function() {
-        var data = "job3 - done!";
-        console.log(data);
-        resolve(data);
-    }, 500);
-});
-jobs.push(function(resolve, reject) {
-    setTimeout(function() {
-        var data = "job4 - done!";
-        console.log(data);
-        resolve(data);
-    }, 500);
-});
-jobs.push(function(resolve, reject) {
-    setTimeout(function() {
-        var data = "job5 - done!";
-        console.log(data);
-        resolve(data);
-    }, 500);
-});
-jobs.push(function(resolve, reject) {
-    setTimeout(function() {
-        var data = "job6 - done!";
-        console.log(data);
-        resolve(data);
-    }, 500);
-});
+test('works for concurrency of 1', async () => {
+    let jobs = createJobs(20, 200);
 
-test('works for concurrency of 1', () => {
-    expect(3).toBe(3);
+    // TODO: expect some assertions
 
-    asyncThrottle.parallel(jobs, 2, 100, () => {
+    await asyncThrottle.parallel(jobs, 5, 100, () => {
         console.log('all done.');
     });
 });
