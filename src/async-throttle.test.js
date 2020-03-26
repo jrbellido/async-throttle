@@ -1,4 +1,4 @@
-let asyncThrottle = require('../src/index.js');
+let asyncThrottle = require('./async-throttle.js');
 
 var jobs = [];
 
@@ -45,6 +45,10 @@ jobs.push(function(resolve, reject) {
     }, 500);
 });
 
-asyncThrottle.parallel(jobs, 2, 100, () => {
-  console.log('all done.');
+test('works for concurrency of 1', () => {
+    expect(3).toBe(3);
+
+    asyncThrottle.parallel(jobs, 2, 100, () => {
+        console.log('all done.');
+    });
 });
