@@ -86,7 +86,15 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var range = __webpack_require__(1);
 
 module.exports = {
   parallel: function parallel(tasks, maxConcurrency, delay, callback) {
@@ -103,18 +111,28 @@ module.exports = {
         if (current < maxConcurrency) {
           var toTake = Math.min(maxConcurrency - current, taskQueue.length);
 
-          for (var i = 0; i < toTake; i++) {
-            var task = taskQueue.pop();
+          var _iterator = _createForOfIteratorHelper(range(1, toTake)),
+              _step;
 
-            if (typeof task === 'function') {
-              current++;
-              task.apply(this, [function resolveFn() {
-                current--;
-              }, function rejectFn() {
-                current--;
-              }]);
-              setTimeout(resolveTasks, delay);
+          try {
+            for (_iterator.s(); !(_step = _iterator.n()).done;) {
+              var i = _step.value;
+              var task = taskQueue.pop();
+
+              if (typeof task === 'function') {
+                current++;
+                task.apply(this, [function resolveFn() {
+                  current--;
+                }, function rejectFn() {
+                  current--;
+                }]);
+                setTimeout(resolveTasks, delay);
+              }
             }
+          } catch (err) {
+            _iterator.e(err);
+          } finally {
+            _iterator.f();
           }
         } else {
           setTimeout(resolveTasks, delay);
@@ -133,6 +151,43 @@ module.exports = {
     })();
   }
 };
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+module.exports = /*#__PURE__*/regeneratorRuntime.mark(function range(begin, end) {
+  var interval,
+      i,
+      _args = arguments;
+  return regeneratorRuntime.wrap(function range$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          interval = _args.length > 2 && _args[2] !== undefined ? _args[2] : 1;
+          i = begin;
+
+        case 2:
+          if (!(i < end)) {
+            _context.next = 8;
+            break;
+          }
+
+          _context.next = 5;
+          return i;
+
+        case 5:
+          i += interval;
+          _context.next = 2;
+          break;
+
+        case 8:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, range);
+});
 
 /***/ })
 /******/ ]);

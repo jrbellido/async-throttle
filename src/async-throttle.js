@@ -1,3 +1,5 @@
+let range = require('./range.js');
+
 module.exports = {
     parallel: (tasks, maxConcurrency, delay, callback) => {
         var taskQueue = tasks.reverse();
@@ -11,7 +13,7 @@ module.exports = {
             if (taskQueue.length > 0) {
                 if (current < maxConcurrency) {
                     var toTake = Math.min(maxConcurrency - current, taskQueue.length);
-                    for (var i = 0; i < toTake; i++) {
+                    for (let i of range(1, toTake)) {
                         var task = taskQueue.pop();
                         if (typeof task === 'function') {
                             current++;

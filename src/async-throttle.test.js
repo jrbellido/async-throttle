@@ -1,3 +1,6 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 let asyncThrottle = require('./async-throttle.js');
 
 function createJobs(count, time) {
