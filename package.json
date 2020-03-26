@@ -6,6 +6,9 @@
   "scripts": {},
   "author": "",
   "license": "ISC",
+  "scripts": {
+    "build": "./node_modules/.bin/webpack --mode production"
+  },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
