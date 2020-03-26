@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "./node_modules/.bin/webpack --mode production",
-    "clean": "yarn autoclean --force",
+    "build": "./node_modules/.bin/webpack --mode none",
     "test": "jest"
   },
   "author": "",
