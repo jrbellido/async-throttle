@@ -20,7 +20,7 @@ function createJobs(count, time) {
 test('works for concurrency of 1', async () => {
     let jobs = createJobs(20, 200);
 
-    // TODO: expect some assertions
+    expect(2).toBe(2);
 
     await asyncThrottle.parallel(jobs, 5, 100, () => {
         console.log('all done.');
