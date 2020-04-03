@@ -86,9 +86,7 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var range = __webpack_require__(1);
+/***/ (function(module, exports) {
 
 module.exports = {
   parallel: function parallel(tasks, maxConcurrency, delay) {
@@ -96,7 +94,6 @@ module.exports = {
     var current = 0;
     return new Promise(function (resolveAll, rejectAll) {
       (function resolveTasks() {
-        //console.log('queue:', taskQueue.length, 'current:', current);
         var toTake = Math.min(maxConcurrency - current, taskQueue.length);
 
         for (var i = 0; i < toTake; i++) {
@@ -114,78 +111,9 @@ module.exports = {
           setTimeout(resolveTasks, delay);
         }
       })();
-      /*
-      (function resolveTasks() {
-      console.log('queue:', taskQueue.length, 'finished:', finished, 'current:', current);
-       if (finished) {
-      return resolvePromise(5); 
-      }
-      if (taskQueue.length > 0) {
-      if (current < maxConcurrency) {
-      var toTake = Math.min(maxConcurrency - current, taskQueue.length);
-      for (let i of range(1, toTake)) {
-      var task = taskQueue.pop();
-      current++;
-      task.apply(this, [
-      function resolveFn() {
-      current--;
-      }
-      ]);
-      setTimeout(resolveTasks, delay);
-      }
-      } else {
-      setTimeout(resolveTasks, delay);
-      }
-      } else {
-      if (current === 0 && !finished) {
-      finished = true;
-      } else {
-      setTimeout(resolveTasks, delay);
-      }
-      }
-      })();
-      */
-
     });
   }
 };
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = /*#__PURE__*/regeneratorRuntime.mark(function range(begin, end) {
-  var interval,
-      i,
-      _args = arguments;
-  return regeneratorRuntime.wrap(function range$(_context) {
-    while (1) {
-      switch (_context.prev = _context.next) {
-        case 0:
-          interval = _args.length > 2 && _args[2] !== undefined ? _args[2] : 1;
-          i = begin;
-
-        case 2:
-          if (!(i < end)) {
-            _context.next = 8;
-            break;
-          }
-
-          _context.next = 5;
-          return i;
-
-        case 5:
-          i += interval;
-          _context.next = 2;
-          break;
-
-        case 8:
-        case "end":
-          return _context.stop();
-      }
-    }
-  }, range);
-});
 
 /***/ })
 /******/ ]);
