@@ -92,7 +92,7 @@ module.exports = {
   parallel: function parallel(tasks, maxConcurrency, delay) {
     var taskQueue = tasks.reverse();
     var current = 0;
-    return new Promise(function (resolveAll, rejectAll) {
+    return new Promise(function (resolveAll) {
       (function resolveTasks() {
         var toTake = Math.min(maxConcurrency - current, taskQueue.length);
 
@@ -106,7 +106,6 @@ module.exports = {
 
         if (taskQueue.length === 0 && current === 0) {
           resolveAll();
-          return;
         } else {
           setTimeout(resolveTasks, delay);
         }

@@ -9,7 +9,7 @@ const sharedConfig = {
         }]
     },
     plugins: []
-}
+};
 
 const devConfig = {
     ...sharedConfig,
@@ -24,7 +24,7 @@ const prodConfig = {
     ...sharedConfig,
     mode: 'production',
     optimization: {
-      minimize: true
+        minimize: true
     },
     entry: './src/async-throttle.js',
     output: {
